@@ -12,6 +12,8 @@ public class Neuron : INeuron
 
     public double h { get; set; }
 
+    public double dL_dh { get; set; }
+
     public Neuron(IActivationFunction activationFunction)
     {
         this.ActivationFunction = activationFunction;

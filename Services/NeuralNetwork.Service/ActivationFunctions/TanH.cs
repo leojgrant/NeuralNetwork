@@ -2,23 +2,15 @@
 
 namespace NeuralNetwork.Service.ActivationFunctions;
 
-public class ReLu : IActivationFunction
+public class TanH : IActivationFunction
 {
     public double Calculate_h(double Z)
     {
-        if (Z > 0)
-        {
-            return Z;
-        }
-        return 0;
+        return 1 / (1 + Math.Exp(-1 * Z));
     }
 
     public double Calculate_dh_dZ(double h)
     {
-        if (h > 0)
-        {
-            return 1;
-        }
-        return 0;
+        return h*(1-h);
     }
 }

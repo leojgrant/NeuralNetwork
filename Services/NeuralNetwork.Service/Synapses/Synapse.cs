@@ -7,7 +7,7 @@ public class Synapse : ISynapse
 {
     public double Weight { get; set; }
 
-    public double dL_dh {  get; set; }
+    public double dL_dhi {  get; set; }
 
     public INeuron InputNeuron { get; set; }
 
@@ -20,15 +20,16 @@ public class Synapse : ISynapse
         this.InputNeuron = inputNeuron;
         this.OutputNeuron = outputNeuron;
         this.Optimiser = optimiser;
-        this.Weight = 0;
-        this.dL_dh = 0;
+        this.Weight = 1;
+        this.dL_dhi = 0;
     }
 
     public void UpdateWeight(double dL_dho)
     {
         double dL_dW = this.Calculate_dL_dW(dL_dho);
-        Optimiser.UpdateWeight(this.Weight, dL_dW);
-        this.Update_dL_dh(dL_dho);
+        this.Weight = Optimiser.CalculateImprovedWeight(this.Weight, dL_dW);
+        //Console.WriteLine(this.Weight);
+        this.Update_dL_dhi(dL_dho);
     }
 
     private double Calculate_dL_dW(double dL_dho)
@@ -39,10 +40,10 @@ public class Synapse : ISynapse
         return dZo_dW * dho_dZ * dL_dho;
     }
 
-    private void Update_dL_dh(double dL_dho)
+    private void Update_dL_dhi(double dL_dho)
     {
         double dZo_dhi = this.Weight;
         double dho_dZo = this.OutputNeuron.h;
-        this.dL_dh = dZo_dhi * dho_dZo * dL_dho;
+        this.dL_dhi = dZo_dhi * dho_dZo * dL_dho;
     }
 }

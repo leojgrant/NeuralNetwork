@@ -6,7 +6,7 @@ public interface ISynapse
 {
     public double Weight { get; set; }
 
-    public double dL_dh { get; set; }
+    public double dL_dhi { get; set; }
 
     public INeuron InputNeuron { get; set; }
 

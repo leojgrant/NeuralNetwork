@@ -17,52 +17,63 @@ public class SimpleNeuralNetwork : ISimpleNeuralNetwork
 
     public List<double> Predictions { get; set; }
 
-    Dictionary<INeuron, double> dL_dp_Mapper {  get; set; }
-
-    Dictionary<INeuron, double> TargetMapper { get; set; }
+    public List<double> Targets { get; set; }
 
     public SimpleNeuralNetwork(List<double> layers, ILossFunction lossFunction, IOptimiser optimiser, INeuron neuronTemplate) 
     {
         this.InitLayers(neuronTemplate, layers);
         this.InitSynapseCollection(optimiser);
         this.LossFunction = lossFunction;
-        this.Init_dL_dp_Mapper();
-        this.Init_Targets();
+        this.Predictions = new List<double>();
+        this.Targets = new List<double>();
     }
 
-    public double ForwardPropagate(List<double> inputs)
+    public void ForwardPropagate(List<double> inputs)
     {
-        this.Predictions = inputs;
-        return 1;
+        UpdateInputNeuronsZ(inputs);
+        for (var i = 0; i < this.SynapseCollections.Count; i++)
+        {
+            this.SynapseCollections[i].ForwardPropagateInput();
+        }
+        this.Predictions.Clear();
+        foreach (INeuron neuron in this.Layers[this.Layers.Count - 1].Neurons)
+        {
+            this.Predictions.Add(neuron.h);
+        }
     }
 
     public void BackPropagate()
     {
-        this.Update_dL_dp_Mapper();
-
-        bool isOutputLayer = true;
-        for(var i = this.Layers.Count - 1; i > 0; i--)
+        this.UpdateOutputNeurons_dL_dh();
+        for(var i = this.SynapseCollections.Count - 1; i >= 0; i--)
         { 
-            if (isOutputLayer)
-            {
-                this.SynapseCollections[this.SynapseCollections.Count - 1].UpdateWeights(this.dL_dp_Mapper);
-                isOutputLayer = false;
-                continue;
-            } 
+            this.SynapseCollections[i].UpdateWeights();
+        }
+    }
 
-            this.SynapseCollections[i].UpdateWeights(SynapseCollections[i+1].dL_dh_Mapper);
+    private void UpdateInputNeuronsZ(List<double> inputs)
+    {
+        List<INeuron> inputNeurons = this.Layers[0].Neurons;
+        for (int i = 0; i < inputNeurons.Count; i++)
+        {
+            inputNeurons[i].Z = inputs[i];
+        }
+    }
+
+    private void UpdateOutputNeurons_dL_dh()
+    {
+        int i = 0;
+        List<INeuron> outputNeurons = this.Layers[this.Layers.Count - 1].Neurons;
+        foreach (INeuron neuron in outputNeurons)
+        {
+            neuron.dL_dh = this.LossFunction.Calculate_dL_dp(this.Targets[i], this.Predictions[i]);
+            i++;
         }
     }
 
     public void SetTargets(List<double> targets)
     {
-        int i = 0;
-        foreach (var (neuron, dL_dp) in this.TargetMapper)
-        {
-            this.TargetMapper[neuron] = targets[i];
-            Console.WriteLine(neuron);
-            i++;
-        }
+        this.Targets = targets;
     }
 
     private void InitLayers(INeuron neuronTemplate, List<double> layers)
@@ -76,39 +87,11 @@ public class SimpleNeuralNetwork : ISimpleNeuralNetwork
 
     private void InitSynapseCollection(IOptimiser optimiser)
     {
-        // Check number of layers > 0 - through error if not
+        // Check number of layers > 0 - throw error if not
         this.SynapseCollections = new List<ISynapseCollection>();
         for (int i = 0; i < this.Layers.Count - 1; i++)
         {
-            this.SynapseCollections.Add(new SynapseCollection(this.Layers[i].Neurons, this.Layers[i+1].Neurons, optimiser));
-        }
-    }
-
-    private void Init_dL_dp_Mapper()
-    {
-        int indexOutputLayer = this.SynapseCollections.Count - 1;
-        this.dL_dp_Mapper = new Dictionary<INeuron, double>();
-        foreach (ISynapse synapse in this.SynapseCollections[indexOutputLayer].Synapses)
-        {
-            this.dL_dp_Mapper[synapse.OutputNeuron] = 0;
-        }
-    }
-
-    private void Init_Targets()
-    {
-        int indexOutputLayer = this.SynapseCollections.Count - 1;
-        this.TargetMapper = new Dictionary<INeuron, double>();
-        foreach (ISynapse synapse in this.SynapseCollections[indexOutputLayer].Synapses)
-        {
-            this.TargetMapper[synapse.OutputNeuron] = 0;
-        }
-    }
-
-    private void Update_dL_dp_Mapper()
-    {
-        foreach(var (neuron, dL_dp) in this.dL_dp_Mapper)
-        {
-            this.dL_dp_Mapper[neuron] = this.LossFunction.Calculate_dL_dp(TargetMapper[neuron], neuron.h);
+            this.SynapseCollections.Add(new SynapseCollection(this.Layers[i], this.Layers[i+1], optimiser));
         }
     }
 }

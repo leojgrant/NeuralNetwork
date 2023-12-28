@@ -9,6 +9,8 @@ public class MSE : ILossFunction
 
     public double Calculate_dL_dp(double target, double prediction)
     {
+        //Console.WriteLine("Error:");
+        //Console.WriteLine(prediction - target);
         return prediction - target;
     }
 }

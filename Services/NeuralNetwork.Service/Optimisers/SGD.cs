@@ -8,7 +8,7 @@ public class SGD : IOptimiser
     {
         this.LearningRate = learningRate;
     }
-    public double UpdateWeight(double weight, double dL_dW)
+    public double CalculateImprovedWeight(double weight, double dL_dW)
     {
         return weight - this.LearningRate * dL_dW;
     }

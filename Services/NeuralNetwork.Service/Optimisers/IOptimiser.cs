@@ -3,5 +3,5 @@
 public interface IOptimiser
 {
     public double LearningRate { get; set; }
-    public double UpdateWeight(double w, double dL_dW);
+    public double CalculateImprovedWeight(double w, double dL_dW);
 }

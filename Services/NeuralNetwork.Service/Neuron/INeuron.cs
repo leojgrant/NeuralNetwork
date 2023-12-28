@@ -11,4 +11,6 @@ public interface INeuron
     public double Z {  get; set; }
 
     public double h { get; set; }
+
+    public double dL_dh { get; set; }
 }
