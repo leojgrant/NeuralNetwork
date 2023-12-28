@@ -1,10 +1,12 @@
-﻿using NeuralNetwork.Service.Neuron;
+﻿using NeuralNetwork.Service.Neurons;
 
-namespace NeuralNetwork.Service.Synapse;
+namespace NeuralNetwork.Service.Synapses;
 
 public interface ISynapse
 {
     public double Weight { get; set; }
+
+    public double dL_dh { get; set; }
 
     public INeuron InputNeuron { get; set; }
 

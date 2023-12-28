@@ -1,10 +1,15 @@
 ﻿namespace NeuralNetwork.Service.Optimisers;
 
-internal class SGD : IOptimiser
+public class SGD : IOptimiser
 {
-    public double learningRate { get; set; }
-    public double UpdateWeight(double w, double dL_dW)
+    public double LearningRate { get; set; }
+
+    public SGD(double learningRate)
     {
-        return w - this.learningRate * dL_dW;
+        this.LearningRate = learningRate;
+    }
+    public double UpdateWeight(double weight, double dL_dW)
+    {
+        return weight - this.LearningRate * dL_dW;
     }
 }

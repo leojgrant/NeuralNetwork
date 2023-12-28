@@ -1,9 +1,9 @@
-﻿using NeuralNetwork.Service.Neuron;
+﻿using NeuralNetwork.Service.Neurons;
 using NeuralNetwork.Service.Optimisers;
 
-namespace NeuralNetwork.Service.Synapse;
+namespace NeuralNetwork.Service.Synapses;
 
-public class Synapse
+public class Synapse : ISynapse
 {
     public double Weight { get; set; }
 
@@ -14,6 +14,15 @@ public class Synapse
     public INeuron OutputNeuron { get; set; }
 
     public IOptimiser Optimiser { get; set; }
+
+    public Synapse(INeuron inputNeuron, INeuron outputNeuron, IOptimiser optimiser)
+    {
+        this.InputNeuron = inputNeuron;
+        this.OutputNeuron = outputNeuron;
+        this.Optimiser = optimiser;
+        this.Weight = 0;
+        this.dL_dh = 0;
+    }
 
     public void UpdateWeight(double dL_dho)
     {
