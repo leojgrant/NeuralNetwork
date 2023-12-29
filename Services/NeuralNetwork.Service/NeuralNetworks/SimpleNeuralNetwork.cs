@@ -1,7 +1,6 @@
 ﻿using NeuralNetwork.Service.SynapseCollections;
 using NeuralNetwork.Service.LossFunctions;
 using NeuralNetwork.Service.Neurons;
-using NeuralNetwork.Service.Synapses;
 using NeuralNetwork.Service.Optimisers;
 using NeuralNetwork.Service.Layers;
 
@@ -22,7 +21,7 @@ public class SimpleNeuralNetwork : ISimpleNeuralNetwork
     public SimpleNeuralNetwork(List<double> layers, ILossFunction lossFunction, IOptimiser optimiser, INeuron neuronTemplate) 
     {
         this.InitLayers(neuronTemplate, layers);
-        this.InitSynapseCollection(optimiser);
+        this.InitSynapseCollections(optimiser);
         this.LossFunction = lossFunction;
         this.Predictions = new List<double>();
         this.Targets = new List<double>();
@@ -85,7 +84,7 @@ public class SimpleNeuralNetwork : ISimpleNeuralNetwork
         }
     }
 
-    private void InitSynapseCollection(IOptimiser optimiser)
+    private void InitSynapseCollections(IOptimiser optimiser)
     {
         // Check number of layers > 0 - throw error if not
         this.SynapseCollections = new List<ISynapseCollection>();

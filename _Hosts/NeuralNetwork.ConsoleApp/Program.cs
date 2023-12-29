@@ -6,60 +6,157 @@ using NeuralNetwork.Service.NeuralNetworks;
 using NeuralNetwork.Service.Neurons;
 using NeuralNetwork.Service.Optimisers;
 
-
-Console.WriteLine("Hello, World!");
-
-Console.WriteLine("Creating neural network");
-ILossFunction lossFunction = new MSE();
-IOptimiser optimiser = new SGD(0.0001);
-IActivationFunction activationFunction = new TanH();
-INeuron neuronTemplate = new Neuron(activationFunction);
-ISimpleNeuralNetwork neuralNetwork = new SimpleNeuralNetwork([1, 1, 2], lossFunction, optimiser, neuronTemplate);
-
-Console.WriteLine("Neural network created (neurons using TanH Activation Function)");
-
-Console.WriteLine("Initial Testing - inputting 1 to [1,2,1] neural network - expecting output of 0");
-List<double> inputs = new List<double>() { 1 };
-neuralNetwork.ForwardPropagate(inputs);
-
-foreach(double prediction in neuralNetwork.Predictions)
+List<double> ExtractNumbersFromString(String userInput)
 {
-    Console.WriteLine(prediction);
+    userInput = userInput + "-end";
+    string number = "";
+    List<double> numbers = new List<double>();
+    foreach (char c in userInput)
+    {
+        if (Char.IsDigit(c))
+        {
+            number = number + c;
+        } else if (number != "")
+        {
+            numbers.Add(Convert.ToDouble(number));
+            number = "";
+        }
+    }
+    return numbers;
 }
 
-Console.WriteLine("");
 
-activationFunction = new ReLu();
-neuronTemplate = new Neuron(activationFunction);
-neuralNetwork = new SimpleNeuralNetwork([1, 2, 1], lossFunction, optimiser, neuronTemplate);
+Console.WriteLine("Welcome to the simple neural network console app!\n");
 
-Console.WriteLine("Neural network created (neurons using TanH Activation Function)");
+while (true) { 
 
-Console.WriteLine("Initial Testing - inputting 1 to [1,2,1] neural network - expecting output of 0");
-inputs = new List<double>() { 1 };
-neuralNetwork.ForwardPropagate(inputs);
+    Console.WriteLine("Please enter the desired layer configuration of your neural network below");
+    Console.WriteLine("**Tip: enter a set of separated numbers e.g. '1 2 2 1', which creates the neural network below:");
+    Console.WriteLine(@"         O---O          ");
+    Console.WriteLine(@"        / \ / \         ");
+    Console.WriteLine(@"input->O   \   O->Output");
+    Console.WriteLine(@"        \ / \ /         ");
+    Console.WriteLine(@"         O---O          ");
+    Console.WriteLine();
+    Console.Write("Enter layer configuration here: ");
+    String userInput = Console.ReadLine();
 
-foreach (double prediction in neuralNetwork.Predictions)
-{
-    Console.WriteLine(prediction);
-}
+    List<double> layers = ExtractNumbersFromString(userInput);
 
-Console.WriteLine("");
+    Console.Write("\nCustomise the neural network configuration further (y/n): ");
+    userInput = Console.ReadLine();
 
+    ILossFunction lossFunction;
+    IActivationFunction activationFunction;
+    IOptimiser optimiser;
+    double learningRate;
+    ISimpleNeuralNetwork neuralNetwork;
+    if (userInput == "y")
+    {
+        Console.WriteLine("\nSelecting default neural network configuration:\n");
+        Console.WriteLine("Loss function = MSE");
+        Console.WriteLine("Activation function = ReLu");
+        Console.WriteLine("Optimiser = SGD");
+        Console.WriteLine("Learning rate = 0.001");
+        lossFunction = new MSE();
+        activationFunction = new ReLu();
+        learningRate = 0.0001;
+        optimiser = new SGD(learningRate);
+        INeuron neuronTemplate = new Neuron(activationFunction);
 
+        Console.WriteLine("\nCreating neural network...");
+        neuralNetwork = new SimpleNeuralNetwork(layers, lossFunction, optimiser, neuronTemplate);
+        Console.WriteLine("\nNeural network created!\n");
+    } else
+    {
+        Console.WriteLine("\nSelecting default neural network configuration:\n");
+        Console.WriteLine("Loss function = MSE");
+        Console.WriteLine("Activation function = ReLu");
+        Console.WriteLine("Optimiser = SGD");
+        Console.WriteLine("Learning rate = 0.001");
+        lossFunction = new MSE();
+        activationFunction = new ReLu();
+        learningRate = 0.0001;
+        optimiser = new SGD(learningRate);
+        INeuron neuronTemplate = new Neuron(activationFunction);
 
+        Console.WriteLine("\nCreating neural network...");
+        neuralNetwork = new SimpleNeuralNetwork(layers, lossFunction, optimiser, neuronTemplate);
+        Console.WriteLine("\nNeural network created!\n");
+    }
 
-Console.WriteLine("Hello, World!");
-List<double> targets = new List<double>() { 4 };
-neuralNetwork.Targets = targets;
+    Console.Write("Enter input(s) to neural network: ");
+    userInput = Console.ReadLine();
+    Console.WriteLine("");
+    List<double> inputs = ExtractNumbersFromString(userInput);
+    while (inputs.Count != layers[0])
+    {
+        Console.WriteLine($"**Error: The number of inputs does not match the number of neurons in the input layer ({layers[0]}).");
+        Console.Write($"Please enter new inputs here: ");
+        userInput = Console.ReadLine();
+        inputs = ExtractNumbersFromString(userInput);
+        Console.WriteLine("");
+    }
 
-for (int i = 0; i < 10000; i++)
-{
+    Console.Write("Enter target(s) for neural network: ");
+    userInput = Console.ReadLine();
+    Console.WriteLine("");
+    List<double> targets = ExtractNumbersFromString(userInput);
+    while (targets.Count != layers[layers.Count - 1])
+    {
+        Console.WriteLine($"**Error: The number of targets does not match the number of neurons in the output layer ({layers.Count - 1}).");
+        Console.Write($"Please enter new targets here: ");
+        userInput = Console.ReadLine();
+        targets = ExtractNumbersFromString(userInput);
+        Console.WriteLine("");
+    }
+
+    neuralNetwork.Targets = targets;
+
+    Console.Write("Enter the number of training cycles to perform: ");
+    userInput = Console.ReadLine();
+    double numberOfTrainingCycles = ExtractNumbersFromString(userInput)[0];
     neuralNetwork.ForwardPropagate(inputs);
-    neuralNetwork.BackPropagate();
-    //Console.WriteLine("Prediction:");
-    //Console.WriteLine(neuralNetwork.Predictions[0]);
-}
+    Console.Write("\nThe intial prediction of the neural network is:");
+    for(int i = 0; i < neuralNetwork.Predictions.Count; i++)
+    {
+        Console.Write($" {neuralNetwork.Predictions[i]}");
+        if (i == neuralNetwork.Predictions.Count - 1)
+        {
+            Console.WriteLine(".");
+        } else
+        {
+            Console.Write(",");
+        }
+    }
 
-Console.WriteLine("After Training to Aim for a value of 4, the neural network returns:");
-Console.WriteLine(neuralNetwork.Predictions[0]);
+    Console.WriteLine("\nTraining cycle has started.");
+    for (int i = 0; i < numberOfTrainingCycles; i++)
+    {
+        neuralNetwork.ForwardPropagate(inputs);
+        neuralNetwork.BackPropagate();
+    }
+    Console.WriteLine("\nTraining cycle has ended.");
+
+    Console.Write("\nThe final prediction of the neural network is:");
+    for (int i = 0; i < neuralNetwork.Predictions.Count; i++)
+    {
+        Console.Write($" {neuralNetwork.Predictions[i]}");
+        if (i == neuralNetwork.Predictions.Count - 1)
+        {
+            Console.Write(".");
+        }
+        else
+        {
+            Console.Write(",");
+        }
+    }
+
+    Console.Write("\nRepeat the process (y/n): ");
+    userInput = Console.ReadLine();
+    Console.WriteLine("");
+    if (userInput == "n")
+    {
+        Environment.Exit(0);
+    } 
+}
