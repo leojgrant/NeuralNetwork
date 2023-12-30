@@ -36,8 +36,8 @@ public class Synapse : ISynapse
     {
         // dL_dW = dZ_dW * dh_dW * dL_dh
         double dZo_dW = this.InputNeuron.h;
-        double dho_dZ = this.OutputNeuron.ActivationFunction.Calculate_dh_dZ(this.OutputNeuron.h);
-        return dZo_dW * dho_dZ * dL_dho;
+        double dho_dZo = this.OutputNeuron.ActivationFunction.Calculate_dh_dZ(this.OutputNeuron.h);
+        return dZo_dW * dho_dZo * dL_dho;
     }
 
     private void Update_dL_dhi(double dL_dho)

@@ -23,25 +23,17 @@ public class SynapseCollection : ISynapseCollection
 
     public void ForwardPropagateInput()
     {
-        // for neurons in input layer - update h
-        foreach(INeuron neuron in this.InputLayer.Neurons)
-        {
-            neuron.h = neuron.ActivationFunction.Calculate_h(neuron.Z);
-        }
-
         // for neurons in output layer - update z
         foreach(INeuron neuron in this.OutputLayer.Neurons)
         {
             neuron.Z = 0;
             foreach(ISynapse synapse in this.Synapses.Where(synapse => synapse.OutputNeuron == neuron)){
                 neuron.Z += synapse.Weight * synapse.InputNeuron.h;
-                //Console.WriteLine(neuron.Z);
             }
 
             // for neurons in output layer - update h
             neuron.h = neuron.ActivationFunction.Calculate_h(neuron.Z);
         }
-        //Console.WriteLine(this.OutputLayer.Neurons[0].h);
     }
 
     private void InitSynapses(List<INeuron> inputNeurons, List<INeuron> outputNeurons, IOptimiser optimiser)

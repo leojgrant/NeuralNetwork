@@ -50,7 +50,7 @@ while (true) {
     IActivationFunction activationFunction;
     IOptimiser optimiser;
     double learningRate;
-    ISimpleNeuralNetwork neuralNetwork;
+    ISequentialNeuralNetwork neuralNetwork;
     if (userInput == "y")
     {
         Console.WriteLine("\nSelecting default neural network configuration:\n");
@@ -65,7 +65,7 @@ while (true) {
         INeuron neuronTemplate = new Neuron(activationFunction);
 
         Console.WriteLine("\nCreating neural network...");
-        neuralNetwork = new SimpleNeuralNetwork(layers, lossFunction, optimiser, neuronTemplate);
+        neuralNetwork = new SequentialNeuralNetwork(layers, lossFunction, optimiser, neuronTemplate);
         Console.WriteLine("\nNeural network created!\n");
     } else
     {
@@ -73,7 +73,7 @@ while (true) {
         Console.WriteLine("Loss function = MSE");
         Console.WriteLine("Activation function = ReLu");
         Console.WriteLine("Optimiser = SGD");
-        Console.WriteLine("Learning rate = 0.001");
+        Console.WriteLine("Learning rate = 0.0001");
         lossFunction = new MSE();
         activationFunction = new ReLu();
         learningRate = 0.0001;
@@ -81,7 +81,7 @@ while (true) {
         INeuron neuronTemplate = new Neuron(activationFunction);
 
         Console.WriteLine("\nCreating neural network...");
-        neuralNetwork = new SimpleNeuralNetwork(layers, lossFunction, optimiser, neuronTemplate);
+        neuralNetwork = new SequentialNeuralNetwork(layers, lossFunction, optimiser, neuronTemplate);
         Console.WriteLine("\nNeural network created!\n");
     }
 
@@ -117,7 +117,7 @@ while (true) {
     userInput = Console.ReadLine();
     double numberOfTrainingCycles = ExtractNumbersFromString(userInput)[0];
     neuralNetwork.ForwardPropagate(inputs);
-    Console.Write("\nThe intial prediction of the neural network is:");
+    Console.Write("\nThe initial prediction of the neural network is:");
     for(int i = 0; i < neuralNetwork.Predictions.Count; i++)
     {
         Console.Write($" {neuralNetwork.Predictions[i]}");
@@ -152,11 +152,20 @@ while (true) {
         }
     }
 
+    Console.WriteLine("\nThe weights in the neural network are: ");
+    foreach (var synapseCollection in neuralNetwork.SynapseCollections)
+    {
+        foreach (var synapse in synapseCollection.Synapses)
+        {
+            Console.WriteLine($"{synapse.Weight}");
+        }
+    }
+
     Console.Write("\nRepeat the process (y/n): ");
     userInput = Console.ReadLine();
     Console.WriteLine("");
     if (userInput == "n")
     {
         Environment.Exit(0);
-    } 
+    }
 }

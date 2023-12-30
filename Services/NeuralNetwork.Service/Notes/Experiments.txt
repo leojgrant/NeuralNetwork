@@ -1,0 +1,17 @@
+﻿Experiments with the NeuralNetwork.Service:
+
+1. When the neural network overshoots the target, with the next update, reduce the number of synapse collections that are updated.
+	E.g. For a neural network of layer structure [1,2,3,1]:
+	i) First overshoot - only update 2-3, and 3-1
+	ii) Second overshoot - only update 3-1
+	- Measure / Plot:
+		1. Precision (e.g. if aiming for output of 4 with input of 1, aim for 4.00000001 instead of 4.003322 in given number of training cycles)
+
+2. When the neural network overshoots the target, with the next update, reduce the learning rate.
+	E.g. For a neural network with global learning rate of 0.001:
+	i) First overshoot - change learning rate to 0.0001
+	ii) Second overshoot - change learning rate to 0.00001
+	- Measure / Plot:
+		1. Precision (e.g. if aiming for output of 4 with input of 1, aim for 4.00000001 instead of 4.003322 in given number of training cycles)
+
+3. Combine experiment 1 with experiment 2.
