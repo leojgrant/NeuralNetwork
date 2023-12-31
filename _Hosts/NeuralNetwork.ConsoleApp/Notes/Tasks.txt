@@ -1,0 +1,3 @@
+﻿Tasks with the NeuralNetwork.ConsoleApp:
+
+1. Refactor the console app to be more modular and use OOP.

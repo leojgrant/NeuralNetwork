@@ -61,7 +61,7 @@ public class SequentialNeuralNetwork : ISequentialNeuralNetwork
         ForwardPropagateInputNeurons(inputs);
         for (var i = 0; i < this.SynapseCollections.Count; i++)
         {
-            this.SynapseCollections[i].ForwardPropagateInput();
+            this.SynapseCollections[i].ForwardPropagateSynapseCollection();
         }
         this.Predictions.Clear();
         foreach (INeuron neuron in this.Layers[this.Layers.Count - 1].Neurons)
@@ -78,7 +78,7 @@ public class SequentialNeuralNetwork : ISequentialNeuralNetwork
         this.UpdateOutputNeurons_dL_dh();
         for(var i = this.SynapseCollections.Count - 1; i >= 0; i--)
         { 
-            this.SynapseCollections[i].UpdateWeights();
+            this.SynapseCollections[i].BackPropagateSynapseCollection();
         }
     }
 
