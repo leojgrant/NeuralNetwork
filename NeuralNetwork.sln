@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeuralNetwork.Service", "Se
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeuralNetwork.ConsoleApp", "_Hosts\NeuralNetwork.ConsoleApp\NeuralNetwork.ConsoleApp.csproj", "{41BBF259-9E6D-41BD-A4C6-B4D0F86DA37D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Results", "Results", "{EF922E29-E000-4846-8A20-4447814B3F41}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

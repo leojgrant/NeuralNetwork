@@ -1,0 +1,11 @@
+{
+  "ExperimentSelection": [
+    "Experiment_FA_1",
+    "Experiment_LR_1",
+    "Experiment_OPT_1"
+  ],
+  "NeuralNetworkSelection": [
+    "Seq_NN_Demo_1",
+    "NN_Custom_1"
+  ]
+}
