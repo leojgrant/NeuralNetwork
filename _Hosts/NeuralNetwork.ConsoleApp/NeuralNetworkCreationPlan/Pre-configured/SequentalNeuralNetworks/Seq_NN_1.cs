@@ -12,11 +12,12 @@ public class Seq_NN_1 : INeuralNetworkCreationPlan
 {
     public ISequentialNeuralNetwork CreateNeuralNetwork()
     {
-        GenericActions.WriteToConsoleNewLine("\nSelected the Seq_NN_1 neural network creation plan:\n");
-        GenericActions.WriteToConsoleNewLine("Loss function = MSE");
-        GenericActions.WriteToConsoleNewLine("Activation function = ReLu");
-        GenericActions.WriteToConsoleNewLine("Optimiser = SGD");
-        GenericActions.WriteToConsoleNewLine("Learning rate = 0.001");
+        GenericActions.WriteToConsoleNewLine("\nNeural Network Details:");
+        GenericActions.WriteToConsoleNewLine("\tNeural Network Creation Plan = Seq_NN_1");
+        GenericActions.WriteToConsoleNewLine("\tLoss function = MSE");
+        GenericActions.WriteToConsoleNewLine("\tActivation function = ReLu");
+        GenericActions.WriteToConsoleNewLine("\tOptimiser = SGD");
+        GenericActions.WriteToConsoleNewLine("\tLearning rate = 0.001");
 
         List<double> layers = new List<double>() { 1, 16, 1 };
         ILossFunction lossFunction = new MSE();
@@ -25,15 +26,15 @@ public class Seq_NN_1 : INeuralNetworkCreationPlan
         IOptimiser optimiser = new SGD(learningRate);
         INeuron neuronTemplate = new Neuron(activationFunction);
 
-        GenericActions.WriteToConsoleNewLine("\nLayer configuration:");
-        GenericActions.WriteToConsoleNewLine(@"         O---O          ");
-        GenericActions.WriteToConsoleNewLine(@"        / \ / \         ");
-        GenericActions.WriteToConsoleNewLine(@"input->O   \   O->Output");
-        GenericActions.WriteToConsoleNewLine(@"        \ / \ /         ");
-        GenericActions.WriteToConsoleNewLine(@"         O---O          ");
+        GenericActions.WriteToConsoleNewLine("\tLayer configuration:");
+        GenericActions.WriteToConsoleNewLine("\t" + @"         O---O          ");
+        GenericActions.WriteToConsoleNewLine("\t" + @"        / \ / \         ");
+        GenericActions.WriteToConsoleNewLine("\t" + @"input->O   \   O->Output");
+        GenericActions.WriteToConsoleNewLine("\t" + @"        \ / \ /         ");
+        GenericActions.WriteToConsoleNewLine("\t" + @"         O---O          ");
 
         ISequentialNeuralNetwork neuralNetwork = new SequentialNeuralNetwork(layers, lossFunction, optimiser, neuronTemplate);
-        GenericActions.WriteToConsoleNewLine("\nNeural network created!\n");
+        GenericActions.WriteToConsoleNewLine("\tNeural network created!");
         return neuralNetwork;
     }
 }
