@@ -78,7 +78,10 @@ public class Experiment_FA_2 : IExperiment
         myPlot.Title("Experiment_FA_2");
         myPlot.XLabel("Test Data");
         myPlot.YLabel("Model Prediction");
-        myPlot.SaveFig("C:/Users/Owner/Documents/Software Development/C#/Console Applications/NeuralNetwork/NeuralNetwork/Results/Experiment_FA_2.png");
+        var resultFile = "Experiment_FA_2.png";
+        Config config = GenericActions.GetConfig();
+        myPlot.SaveFig(config.FileDownloadPath + resultFile);
+        GenericActions.WriteToConsoleNewLine(config.FileDownloadPath + resultFile);
         neuralNetwork.ForwardPropagate([10]);
         Console.WriteLine(neuralNetwork.Predictions[0]);
         Console.WriteLine(neuralNetwork.Predictions[1]);

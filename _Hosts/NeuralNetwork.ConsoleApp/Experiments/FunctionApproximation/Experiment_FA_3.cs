@@ -59,14 +59,15 @@ public class Experiment_FA_3 : IExperiment
         myPlot.Title("Experiment_FA_3");
         myPlot.XLabel("Test Data");
         myPlot.YLabel("Model Prediction");
-        myPlot.SaveFig("C:/Users/Owner/Documents/Software Development/C#/Console Applications/NeuralNetwork/NeuralNetwork/Results/Experiment_FA_2.png");
+        var resultFile = "Experiment_FA_3.png";
+        Config config = GenericActions.GetConfig();
+        myPlot.SaveFig(config.FileDownloadPath + resultFile);
+        GenericActions.WriteToConsoleNewLine(config.FileDownloadPath + resultFile);
         GenericActions.WriteToConsoleNewLine("\tTest result location = C:/Users/Owner/Documents/Software Development/C#/Console Applications/NeuralNetwork/NeuralNetwork/Results/Experiment_FA_2.png");
         GenericActions.WriteToConsoleNewLine("\nExperiment has finished.");
         neuralNetwork.ForwardPropagate([1]);
         Console.WriteLine(neuralNetwork.Predictions[0]);
-        Console.WriteLine("ddd");
         Console.WriteLine(neuralNetwork.Predictions[1]);
-        Console.WriteLine("ddddd");
     }
 }
 

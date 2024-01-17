@@ -7,5 +7,6 @@ public class Experiment_LR_1 : IExperiment
     public void Run()
     {
         GenericActions.WriteToConsoleNewLine("Experiment_LR_1 is running...");
+        GenericActions.WriteToConsoleNewLine("Experiment has finished.");
     }
 }
