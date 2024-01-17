@@ -27,7 +27,7 @@ The neural network console app is designed with ecperimentation in mind by allow
 - The /NeuralNetworkCreationPlans dir is where you can create UX / UI flows for neural network creation within your Experiment (e.g. you can use a pre-configured neural network, or you can customise it on the fly within the app - it all depends on the creation plan used in the Experiment).
 
 An example Experiment I have run is shown below:
-![image](https://github.com/leojgrant/NeuralNetwork/assets/66557864/e2383983-78b2-43fd-9ce6-a3cfa8905112)
+![image](https://github.com/leojgrant/NeuralNetwork/assets/66557864/4b3515e5-5149-415a-b94a-93bc53960b31)
 
  This outputs the following graph:
 ![image](https://github.com/leojgrant/NeuralNetwork/assets/66557864/bfd9854c-af54-4d66-9a25-15dfb8178b8c)
