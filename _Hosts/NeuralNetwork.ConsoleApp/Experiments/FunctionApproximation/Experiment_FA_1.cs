@@ -22,7 +22,11 @@ public class Experiment_FA_1 : IExperiment
         GenericActions.WriteToConsoleNewLine("\tThe training cycle has begun.");
         for (int i = 0; i < numEpochs; i++)
         {
-            for(int j = 0; j < trainingInputData.Count; j++)
+            if (i % 1000 == 0)
+            {
+                Console.WriteLine("\tEpochs performed: " + i);
+            }
+            for (int j = 0; j < trainingInputData.Count; j++)
             {
                 neuralNetwork.Targets = [targetData[j]];
                 neuralNetwork.ForwardPropagate([trainingInputData[j]]);
