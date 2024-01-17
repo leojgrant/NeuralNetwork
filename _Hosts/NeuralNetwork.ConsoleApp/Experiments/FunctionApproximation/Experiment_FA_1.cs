@@ -48,7 +48,7 @@ public class Experiment_FA_1 : IExperiment
         var resultFile = "Experiment_FA_1.png";
         Config config = GenericActions.GetConfig();
         myPlot.SaveFig(config.FileDownloadPath + resultFile);
-        GenericActions.WriteToConsoleNewLine(config.FileDownloadPath + resultFile);
+        GenericActions.WriteToConsoleNewLine("\tResults download path: " + config.FileDownloadPath + resultFile);
         GenericActions.WriteToConsoleNewLine("\nExperiment has finished.");
     }
 }

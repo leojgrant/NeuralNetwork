@@ -19,7 +19,7 @@ public class Seq_NN_2 : INeuralNetworkCreationPlan
         GenericActions.WriteToConsoleNewLine("\tOptimiser = SGD");
         GenericActions.WriteToConsoleNewLine("\tLearning rate = 0.001");
 
-        List<double> layers = new List<double>() { 1,2,2 };
+        List<double> layers = new List<double>() { 1,2,2,2 };
         ILossFunction lossFunction = new MSE();
         IActivationFunction activationFunction = new ReLu();
         double learningRate = 0.00000001;
