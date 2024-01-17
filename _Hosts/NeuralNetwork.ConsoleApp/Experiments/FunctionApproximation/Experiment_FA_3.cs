@@ -24,9 +24,7 @@ public class Experiment_FA_3 : IExperiment
         GenericActions.WriteToConsoleNewLine("\nTraining Details:");
         neuralNetwork.ForwardPropagate([1]);
         Console.WriteLine(neuralNetwork.Predictions[0]);
-        Console.WriteLine("ddd");
         Console.WriteLine(neuralNetwork.Predictions[1]);
-        Console.WriteLine("ddddd");
         GenericActions.WriteToConsoleNewLine("\tThe training cycle has begun.");
         for (int i = 0; i < numEpochs; i++)
         {
