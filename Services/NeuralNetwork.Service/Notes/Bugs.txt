@@ -1,0 +1,27 @@
+﻿Bugs to fix with the NeuralNetwork.Service:
+
+1. The console app hangs with large layers during the training cycle.
+
+2-DONE. If I use a ReLu function for all neurons, and then use very large layers, the output of the neural network is 0 after training.
+	An example is a neural network of [1, 9000, 1] outputting 48 initially with an input of 1, whilst the target is 4.
+	This is because the initial weight of the synapses is currently set to 1, so initial error is a large negative value.
+	This means that the weights in a layer can suddenly all become corrected to negative values.
+	If this happens, the ReLu function means that the all outputs are and remain 0.
+	- Fix:
+		This may be helped by randomising the weights so that 50% are >0 and 50% <0, reducing the value of the inital negative error by reducing the positive value of the initial prediction.
+		However, this does not mean the issue is fixed, since the large error could still shock all the weights in a single synapse collection into a -ve number during a single update.
+		Hence, some kind of detection system should be used to identify this situation and reduce the learning rate used during the update to prevent all weights in the synapse collection being shocked into negative numbers.
+	- Note:
+		On second thought, also possible that the weights are gradually submerged below 0 (over several updates) if the weights in proceeding layers are not shrinking fast enough so the weights closer to the input still try to reduce the error by reducing in value.
+		This could also be protected with a detection system to perhaps freeze further weight reducing changes in this synapse collection during future updates.
+		A factor (called 'freezeFraction') could be set, the minimum ratio of positively to negatively weighted synapses allowed in the synapse collection with only ReLu activation functions used in the output neurons of that synapse collection, before freezing for further updates.
+	- Note:
+		After testing with [1 1000 1] and learning rate 0.0001 and target 1005 with post-training output 0, then changing the learning rate to 0.000001, I get an post-training output of 1005.
+		Hence, the issue is the large learning rate caused over-correction (shocking weights to <0).
+	- Note:
+		After testing with [1 9000 1] and learning rate 0.0001 and target 4, the input synapse collection was found to have all negative weights after a single update.
+		Hence again, the issue is the large learning rate caused over-correction (shocking weights to <0).
+	- CLOSED:
+		I'm assigning this bug as closed given it has now been identified not as a bug but as working correctly.
+		The fix could be applied but should be opened as a task if this functionality is desired in the future.
+		

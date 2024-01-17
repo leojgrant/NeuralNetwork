@@ -1,0 +1,11 @@
+﻿Tasks with the NeuralNetwork.Service:
+
+1. The biases of neurons are not considered in forward or back propagation at the moment - they should be.
+
+2. Randomise the initial weight value of synapses.
+
+3. Implement an IWeightInitialiser interface and WeightInitialiser classes to use various weight initialisation methods.
+
+4-optional. Repeat task 3 but with the bias of the neuron.
+
+5-optional. Repeat task 3 but with the layers of the neural network (to test different strategies/types of layers e.g. combinations of activation functions in the same layer).
