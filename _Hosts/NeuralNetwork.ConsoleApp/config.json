@@ -9,5 +9,6 @@
   "NeuralNetworkSelection": [
     "Seq_NN_Demo_1",
     "NN_Custom_1"
-  ]
+  ],
+  "file-download-path": "C:/Users/Owner/Documents/Software Development/C#/Console Applications/NeuralNetwork/NeuralNetwork/Results/"
 }

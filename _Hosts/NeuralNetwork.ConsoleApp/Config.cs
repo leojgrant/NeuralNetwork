@@ -6,5 +6,7 @@
         public List<String> ExperimentSelection { get; set; }
 
         public List<String> NeuralNetworkSelection { get; set; }
+
+        public String FileDownloadPath { get; set; }
     }
 }
