@@ -60,6 +60,7 @@ public class SynapseCollection : ISynapseCollection
     public void BackPropagateSynapseCollection()
     {
         OptimiseWeights();
+        OptimiseBiases();
         RefreshInputNeurons_dL_dh();
     }
 
@@ -90,6 +91,24 @@ public class SynapseCollection : ISynapseCollection
         {
             synapse.BackPropagateSynapse(synapse.OutputNeuron.dL_dh);
         }
+    }
+
+    private void OptimiseBiases()
+    {
+        double dL_dB;
+        foreach(INeuron neuron in this.OutputLayer.Neurons)
+        {
+            dL_dB = Calculate_dL_dB(neuron);
+            neuron.Bias = neuron.Optimiser.CalculateImprovedWeight(neuron.Bias, dL_dB);
+        }
+    }
+
+    private double Calculate_dL_dB(INeuron neuron)
+    {
+        double dZo_dB = 1;
+        double dho_dZo = neuron.ActivationFunction.Calculate_dh_dZ(neuron.h);
+        double dL_dho = neuron.dL_dh;
+        return dZo_dB * dho_dZo * dL_dho;
     }
 
     /// <summary>

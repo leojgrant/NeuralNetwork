@@ -1,4 +1,5 @@
 ﻿using NeuralNetwork.Service.Activation_Functions;
+using NeuralNetwork.Service.Optimisers;
 
 namespace NeuralNetwork.Service.Neurons;
 
@@ -16,6 +17,8 @@ public class Neuron : INeuron
     /// The activation function applied to the signal (Z) in the neuron.
     /// </summary>
     public IActivationFunction ActivationFunction { get; set; }
+
+    public IOptimiser Optimiser { get; set; }
 
     /// <summary>
     /// The sum of the signals entering the neuron and the bias of the neuron during a run of forward propagation.
@@ -36,9 +39,10 @@ public class Neuron : INeuron
     /// A constructor method of a neuron.
     /// </summary>
     /// <param name="activationFunction">The activation function applied to signals (Z) running through the neuron during forward propagation.</param>
-    public Neuron(IActivationFunction activationFunction)
+    public Neuron(IActivationFunction activationFunction, IOptimiser optimiser)
     {
         this.ActivationFunction = activationFunction;
+        this.Optimiser = optimiser;
         this.Bias = 0;
         this.Z = 0;
         this.h = 0;
@@ -51,6 +55,7 @@ public class Neuron : INeuron
     public Neuron(INeuron neuronTemplate)
     {
         this.ActivationFunction = neuronTemplate.ActivationFunction;
+        this.Optimiser = neuronTemplate.Optimiser;
         this.Bias = neuronTemplate.Bias;
         this.Z = neuronTemplate.Z;
         this.h = neuronTemplate.h;

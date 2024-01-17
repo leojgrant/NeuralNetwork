@@ -8,21 +8,21 @@ using NeuralNetwork.Service.Optimisers;
 
 namespace NeuralNetwork.ConsoleApp.NeuralNetworkCreationPlan;
 
-public class Seq_NN_1 : INeuralNetworkCreationPlan
+public class Seq_NN_2 : INeuralNetworkCreationPlan
 {
     public ISequentialNeuralNetwork CreateNeuralNetwork()
     {
         GenericActions.WriteToConsoleNewLine("\nNeural Network Details:");
-        GenericActions.WriteToConsoleNewLine("\tNeural Network Creation Plan = Seq_NN_1");
+        GenericActions.WriteToConsoleNewLine("\tNeural Network Creation Plan = Seq_NN_2");
         GenericActions.WriteToConsoleNewLine("\tLoss function = MSE");
         GenericActions.WriteToConsoleNewLine("\tActivation function = ReLu");
         GenericActions.WriteToConsoleNewLine("\tOptimiser = SGD");
         GenericActions.WriteToConsoleNewLine("\tLearning rate = 0.001");
 
-        List<double> layers = new List<double>() { 1, 16, 1 };
+        List<double> layers = new List<double>() { 1, 2,2,2,2,2,2 };
         ILossFunction lossFunction = new MSE();
         IActivationFunction activationFunction = new ReLu();
-        double learningRate = 0.0001;
+        double learningRate = 0.00000001;
         IOptimiser optimiser = new SGD(learningRate);
         INeuron neuronTemplate = new Neuron(activationFunction, optimiser);
 

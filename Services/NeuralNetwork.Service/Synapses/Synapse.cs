@@ -44,7 +44,8 @@ public class Synapse : ISynapse
         this.InputNeuron = inputNeuron;
         this.OutputNeuron = outputNeuron;
         this.Optimiser = optimiser;
-        this.Weight = 1;
+        Random random = new Random();
+        this.Weight = (random.NextDouble() * 2); // - 1;
         this.dL_dhi = 0;
     }
 
@@ -72,7 +73,7 @@ public class Synapse : ISynapse
     }
 
     /// <summary>
-    /// Refresg the dL_dhi value of this synapse.
+    /// Refresh the dL_dhi value of this synapse.
     /// </summary>
     /// <param name="dL_dho">The dL_dh value of the output neuron.</param>
     private void Refresh_dL_dhi(double dL_dho)

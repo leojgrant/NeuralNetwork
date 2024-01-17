@@ -1,4 +1,5 @@
 ﻿using NeuralNetwork.Service.Activation_Functions;
+using NeuralNetwork.Service.Optimisers;
 
 namespace NeuralNetwork.Service.Neurons;
 
@@ -16,6 +17,8 @@ public interface INeuron
     /// The activation function applied to the signal (Z) in the neuron.
     /// </summary>
     public IActivationFunction ActivationFunction { get; set; }
+
+    public IOptimiser Optimiser { get; set; }
 
     /// <summary>
     /// The sum of the signals entering the neuron and the bias of the neuron during a run of forward propagation.
