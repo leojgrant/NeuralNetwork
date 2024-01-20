@@ -1,6 +1,6 @@
 ﻿Bugs to fix with the NeuralNetwork.Service:
 
-1. The console app hangs with large layers during the training cycle.
+1-DONE (Doesn't hang - just slow). The console app hangs with large layers during the training cycle.
 
 2-DONE. If I use a ReLu function for all neurons, and then use very large layers, the output of the neural network is 0 after training.
 	An example is a neural network of [1, 9000, 1] outputting 48 initially with an input of 1, whilst the target is 4.

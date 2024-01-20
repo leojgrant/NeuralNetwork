@@ -1,6 +1,6 @@
 ﻿Tasks with the NeuralNetwork.Service:
 
-1. The biases of neurons are not considered in forward or back propagation at the moment - they should be.
+1-DONE. The biases of neurons are not considered in forward or back propagation at the moment - they should be.
 
 2-DONE (replaced by Task 3 below). Randomise the initial weight value of synapses.
 
@@ -9,3 +9,9 @@
 4-optional. Repeat task 3 but with the bias of the neuron.
 
 5-optional. Repeat task 3 but with the layers of the neural network (to test different strategies/types of layers e.g. combinations of activation functions in the same layer).
+
+6. Add a monitoring class to to be used to test aspects of the neural network at various points through training 
+	(e.g. are all the weights different? What is range of weight values? What is the time taken to update each layer during training etc.).
+	Use this class for investigation and sanity checks - will be very useful!
+
+7. Check that weights don't become undefined / NaN when they get tiny and then get operated on.
