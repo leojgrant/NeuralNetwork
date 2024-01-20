@@ -1,3 +1,5 @@
 ﻿Tasks with the NeuralNetwork.ConsoleApp:
 
 1. Refactor the console app to be more modular and use OOP.
+
+2. Remove Generic Actions (extract functionality).
