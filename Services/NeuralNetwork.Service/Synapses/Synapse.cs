@@ -1,5 +1,6 @@
 ﻿using NeuralNetwork.Service.Neurons;
 using NeuralNetwork.Service.Optimisers;
+using NeuralNetwork.Service.Synapses.WeightInitialisation;
 
 namespace NeuralNetwork.Service.Synapses;
 
@@ -39,13 +40,12 @@ public class Synapse : ISynapse
     /// <param name="inputNeuron"></param>
     /// <param name="outputNeuron"></param>
     /// <param name="optimiser"></param>
-    public Synapse(INeuron inputNeuron, INeuron outputNeuron, IOptimiser optimiser)
+    public Synapse(INeuron inputNeuron, INeuron outputNeuron, IOptimiser optimiser, IWeightInitialiser weightInitialiser)
     {
         this.InputNeuron = inputNeuron;
         this.OutputNeuron = outputNeuron;
         this.Optimiser = optimiser;
-        Random random = new Random();
-        this.Weight = (random.NextDouble() * 2); // - 1;
+        this.Weight = weightInitialiser.RandomNumberBetweenMinusOnePlusOne();
         this.dL_dhi = 0;
     }
 
