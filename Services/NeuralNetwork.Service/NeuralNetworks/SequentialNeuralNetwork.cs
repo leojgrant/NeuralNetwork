@@ -3,6 +3,7 @@ using NeuralNetwork.Service.LossFunctions;
 using NeuralNetwork.Service.Neurons;
 using NeuralNetwork.Service.Optimisers;
 using NeuralNetwork.Service.Layers;
+using NeuralNetwork.Service.Synapses.WeightInitialisation;
 
 namespace NeuralNetwork.Service.NeuralNetworks;
 
@@ -43,10 +44,10 @@ public class SequentialNeuralNetwork : ISequentialNeuralNetwork
     /// <param name="lossFunction">The loss function.</param>
     /// <param name="optimiser">The optimiser used by the synapses in the neural network to update themselves during back propagation.</param>
     /// <param name="neuronTemplate">The template of a neuron to be used to create all neurons in all layers of the neural network.</param>
-    public SequentialNeuralNetwork(List<double> layers, ILossFunction lossFunction, IOptimiser optimiser, INeuron neuronTemplate) 
+    public SequentialNeuralNetwork(List<double> layers, ILossFunction lossFunction, IOptimiser optimiser, IWeightInitialiser weightInitialiser, INeuron neuronTemplate) 
     {
         this.InitLayers(neuronTemplate, layers);
-        this.InitSynapseCollections(optimiser);
+        this.InitSynapseCollections(optimiser, weightInitialiser);
         this.LossFunction = lossFunction;
         this.Predictions = new List<double>();
         this.Targets = new List<double>();
@@ -132,13 +133,13 @@ public class SequentialNeuralNetwork : ISequentialNeuralNetwork
     /// Initialise the synapses in the neural network.
     /// </summary>
     /// <param name="optimiser">The optimiser used by the synapses in the neural network to update themselves during back propagation.</param>
-    private void InitSynapseCollections(IOptimiser optimiser)
+    private void InitSynapseCollections(IOptimiser optimiser, IWeightInitialiser weightInitialiser)
     {
         // Check number of layers > 0 - throw error if not
         this.SynapseCollections = new List<ISynapseCollection>();
         for (int i = 0; i < this.Layers.Count - 1; i++)
         {
-            this.SynapseCollections.Add(new SynapseCollection(this.Layers[i], this.Layers[i+1], optimiser));
+            this.SynapseCollections.Add(new SynapseCollection(this.Layers[i], this.Layers[i+1], optimiser, weightInitialiser));
         }
     }
 }

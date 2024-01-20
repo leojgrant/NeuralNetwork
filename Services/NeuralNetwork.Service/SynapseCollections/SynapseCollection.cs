@@ -2,6 +2,7 @@
 using NeuralNetwork.Service.Neurons;
 using NeuralNetwork.Service.Optimisers;
 using NeuralNetwork.Service.Synapses;
+using NeuralNetwork.Service.Synapses.WeightInitialisation;
 
 namespace NeuralNetwork.Service.SynapseCollections;
 
@@ -31,11 +32,11 @@ public class SynapseCollection : ISynapseCollection
     /// <param name="inputLayer">The layer of neurons making up the input neurons to the synapses in the synapse collection.</param>
     /// <param name="outputLayer">The layer of neurons making up the output neurons to the synapses in the synapse collection.</param>
     /// <param name="optimiser">The optimiser used by the synapses of the synapse collection.</param>
-    public SynapseCollection(ILayer inputLayer, ILayer outputLayer, IOptimiser optimiser) 
+    public SynapseCollection(ILayer inputLayer, ILayer outputLayer, IOptimiser optimiser, IWeightInitialiser weightInitialiser) 
     {
         this.InputLayer = inputLayer;
         this.OutputLayer = outputLayer;
-        this.InitSynapses(inputLayer.Neurons, outputLayer.Neurons, optimiser);
+        this.InitSynapses(inputLayer.Neurons, outputLayer.Neurons, optimiser, weightInitialiser);
     }
 
     /// <summary>
@@ -70,14 +71,14 @@ public class SynapseCollection : ISynapseCollection
     /// <param name="inputLayer">The layer of neurons making up the input neurons to the synapses in the synapse collection.</param>
     /// <param name="outputLayer">The layer of neurons making up the output neurons to the synapses in the synapse collection.</param>
     /// <param name="optimiser">The optimiser used by the synapses of the synapse collection.</param>
-    private void InitSynapses(List<INeuron> inputNeurons, List<INeuron> outputNeurons, IOptimiser optimiser)
+    private void InitSynapses(List<INeuron> inputNeurons, List<INeuron> outputNeurons, IOptimiser optimiser, IWeightInitialiser weightInitialiser)
     {
         this.Synapses = new List<ISynapse>();
         foreach(INeuron inputNeuron in inputNeurons)
         {
             foreach (INeuron outputNeuron in outputNeurons)
             {
-                this.Synapses.Add(new Synapse(inputNeuron, outputNeuron, optimiser));
+                this.Synapses.Add(new Synapse(inputNeuron, outputNeuron, optimiser, weightInitialiser));
             }
         }
     }
