@@ -1,6 +1,6 @@
-﻿namespace NeuralNetwork.Service.Synapses.WeightInitialisation
+﻿namespace NeuralNetwork.Service.Neurons.BiasInitialisation
 {
-    public class WeightInitialiser : IWeightInitialiser
+    public class BiasInitialiser : IBiasInitialiser
     {
         public double RandomNumberBetweenMinusOnePlusOne()
         {

@@ -1,4 +1,5 @@
 ﻿using NeuralNetwork.Service.Neurons;
+using NeuralNetwork.Service.Neurons.BiasInitialisation;
 
 namespace NeuralNetwork.Service.Layers
 {
@@ -17,12 +18,12 @@ namespace NeuralNetwork.Service.Layers
         /// </summary>
         /// <param name="neuronTemplate">A neuron to be used as a template for all other neurons in the layer.</param>
         /// <param name="numberOfNeurons">The number of neurons in the layer.</param>
-        public Layer(INeuron neuronTemplate, double numberOfNeurons) 
+        public Layer(INeuron neuronTemplate, IBiasInitialiser biasInitialiser, double numberOfNeurons) 
         { 
             this.Neurons = new List<INeuron>();
             for (int i = 0; i < numberOfNeurons; i++)
             {
-                this.Neurons.Add(new Neuron(neuronTemplate));
+                this.Neurons.Add(new Neuron(neuronTemplate, biasInitialiser));
             }
         }
     }
