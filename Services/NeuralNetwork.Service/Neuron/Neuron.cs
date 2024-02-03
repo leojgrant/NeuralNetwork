@@ -45,7 +45,7 @@ public class Neuron : INeuron
     {
         this.ActivationFunction = activationFunction;
         this.Optimiser = optimiser;
-        this.Bias = biasInitialiser.RandomNumberBetweenMinusOnePlusOne();
+        this.Bias = biasInitialiser.Zero();
         this.Z = 0;
         this.h = 0;
     }
@@ -59,7 +59,7 @@ public class Neuron : INeuron
     {
         this.ActivationFunction = neuronTemplate.ActivationFunction;
         this.Optimiser = neuronTemplate.Optimiser;
-        this.Bias = biasInitialiser.RandomNumberBetweenMinusOnePlusOne();
+        this.Bias = biasInitialiser.Zero();
         this.Z = neuronTemplate.Z;
         this.h = neuronTemplate.h;
     }

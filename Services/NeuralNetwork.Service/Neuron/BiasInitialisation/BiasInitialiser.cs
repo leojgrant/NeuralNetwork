@@ -1,11 +1,15 @@
-﻿namespace NeuralNetwork.Service.Neurons.BiasInitialisation
+﻿namespace NeuralNetwork.Service.Neurons.BiasInitialisation;
+
+public class BiasInitialiser : IBiasInitialiser
 {
-    public class BiasInitialiser : IBiasInitialiser
+    public double Zero()
     {
-        public double RandomNumberBetweenMinusOnePlusOne()
-        {
-            Random random = new Random();
-            return (random.NextDouble() * 2 ) - 1;
-        }
+        return 0;
+    }
+
+    public double RandomNumberBetweenMinusOnePlusOne()
+    {
+        Random random = new Random();
+        return (random.NextDouble() * 2) - 1;
     }
 }

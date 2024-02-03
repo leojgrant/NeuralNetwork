@@ -2,6 +2,7 @@
 {
     public interface IBiasInitialiser
     {
+        public double Zero();
         public double RandomNumberBetweenMinusOnePlusOne();
     }
 }
