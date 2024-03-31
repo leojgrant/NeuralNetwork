@@ -45,7 +45,8 @@ public class Synapse : ISynapse
         this.InputNeuron = inputNeuron;
         this.OutputNeuron = outputNeuron;
         this.Optimiser = optimiser;
-        this.Weight = weightInitialiser.RandomNumberBetweenMinusOnePlusOne();
+        Random random = new Random();
+        this.Weight = (random.NextDouble() * 2); // - 1;
         this.dL_dhi = 0;
     }
 
