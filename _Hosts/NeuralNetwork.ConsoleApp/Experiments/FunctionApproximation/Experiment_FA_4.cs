@@ -46,7 +46,7 @@ public class Experiment_FA_4 : IExperiment
         GenericActions.WriteToConsoleNewLine($"\tCorresponding predictions from trained neural network: {Math.Round(neuralNetworkOutputData[0], 4)}, {Math.Round(neuralNetworkOutputData[1], 4)}, {Math.Round(neuralNetworkOutputData[2], 4)}, {Math.Round(neuralNetworkOutputData[3], 4)}, {Math.Round(neuralNetworkOutputData[4], 4)}");
         var myPlot = new ScottPlot.Plot(1200, 900);
         myPlot.AddScatter(testInputData, neuralNetworkOutputData);
-        myPlot.Title("Experiment_FA_1");
+        myPlot.Title("Experiment_FA_4");
         myPlot.XLabel("Test Data");
         myPlot.YLabel("Model Prediction");
         var resultFile = "Experiment_FA_4.png";

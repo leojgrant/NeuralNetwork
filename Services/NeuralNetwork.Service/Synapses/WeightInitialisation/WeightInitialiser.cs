@@ -7,5 +7,11 @@
             Random random = new Random();
             return (random.NextDouble() * 2 ) - 1;
         }
+
+        public double RandomNumberBetweenZeroAndPlusOne()
+        {
+            Random random = new Random();
+            return random.NextDouble();
+        }
     }
 }

@@ -3,5 +3,7 @@
     public interface IWeightInitialiser
     {
         public double RandomNumberBetweenMinusOnePlusOne();
+
+        public double RandomNumberBetweenZeroAndPlusOne();
     }
 }
