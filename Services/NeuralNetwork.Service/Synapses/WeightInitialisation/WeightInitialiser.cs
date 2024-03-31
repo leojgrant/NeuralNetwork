@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace NeuralNetwork.Service.Synapses.WeightInitialisation
+﻿namespace NeuralNetwork.Service.Synapses.WeightInitialisation
 {
     public class WeightInitialiser : IWeightInitialiser
     {
@@ -12,6 +6,12 @@ namespace NeuralNetwork.Service.Synapses.WeightInitialisation
         {
             Random random = new Random();
             return (random.NextDouble() * 2 ) - 1;
+        }
+
+        public double RandomNumberBetweenZeroAndPlusOne()
+        {
+            Random random = new Random();
+            return random.NextDouble();
         }
     }
 }

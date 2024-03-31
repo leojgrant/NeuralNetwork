@@ -4,6 +4,7 @@ using NeuralNetwork.Service.Neurons;
 using NeuralNetwork.Service.Optimisers;
 using NeuralNetwork.Service.Layers;
 using NeuralNetwork.Service.Synapses.WeightInitialisation;
+using NeuralNetwork.Service.Neurons.BiasInitialisation;
 
 namespace NeuralNetwork.Service.NeuralNetworks;
 
@@ -44,9 +45,9 @@ public class SequentialNeuralNetwork : ISequentialNeuralNetwork
     /// <param name="lossFunction">The loss function.</param>
     /// <param name="optimiser">The optimiser used by the synapses in the neural network to update themselves during back propagation.</param>
     /// <param name="neuronTemplate">The template of a neuron to be used to create all neurons in all layers of the neural network.</param>
-    public SequentialNeuralNetwork(List<double> layers, ILossFunction lossFunction, IOptimiser optimiser, IWeightInitialiser weightInitialiser, INeuron neuronTemplate) 
+    public SequentialNeuralNetwork(List<double> layers, ILossFunction lossFunction, IOptimiser optimiser, IWeightInitialiser weightInitialiser, INeuron neuronTemplate, IBiasInitialiser biasInitialiser) 
     {
-        this.InitLayers(neuronTemplate, layers);
+        this.InitLayers(neuronTemplate, biasInitialiser, layers);
         this.InitSynapseCollections(optimiser, weightInitialiser);
         this.LossFunction = lossFunction;
         this.Predictions = new List<double>();
@@ -120,12 +121,12 @@ public class SequentialNeuralNetwork : ISequentialNeuralNetwork
     /// </summary>
     /// <param name="neuronTemplate">The template of a neuron to be used to create all neurons in all layers of the neural network.</param>
     /// <param name="layers">The number of neurons that make up each layer that make up the neural network (from input to output).</param>
-    private void InitLayers(INeuron neuronTemplate, List<double> layers)
+    private void InitLayers(INeuron neuronTemplate, IBiasInitialiser biasInitialiser, List<double> layers)
     {
         this.Layers = new List<ILayer>();
         for (int i = 0; i < layers.Count; i++)
         {
-            this.Layers.Add(new Layer(neuronTemplate, layers[i]));
+            this.Layers.Add(new Layer(neuronTemplate, biasInitialiser, layers[i]));
         }
     }
 

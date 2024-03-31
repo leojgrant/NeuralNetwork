@@ -4,6 +4,7 @@ using NeuralNetwork.Service.ActivationFunctions;
 using NeuralNetwork.Service.LossFunctions;
 using NeuralNetwork.Service.NeuralNetworks;
 using NeuralNetwork.Service.Neurons;
+using NeuralNetwork.Service.Neurons.BiasInitialisation;
 using NeuralNetwork.Service.Optimisers;
 using NeuralNetwork.Service.Synapses.WeightInitialisation;
 
@@ -26,14 +27,15 @@ public class Seq_NN_3 : INeuralNetworkCreationPlan
         double learningRate = 0.00000001;
         IOptimiser optimiser = new SGD(learningRate);
         IWeightInitialiser weightInitialiser = new WeightInitialiser();
-        INeuron neuronTemplate = new Neuron(activationFunction, optimiser);
+        IBiasInitialiser biasInitialiser = new BiasInitialiser();
+        INeuron neuronTemplate = new Neuron(activationFunction, optimiser, biasInitialiser);
 
         GenericActions.WriteToConsoleNewLine("\tLayer configuration:");
         GenericActions.WriteToConsoleNewLine("\t" + @"        [1]  [9000]   [1]        ");
         GenericActions.WriteToConsoleNewLine("\t" + @"input--->O----->O----->O--->Output");
 
 
-        ISequentialNeuralNetwork neuralNetwork = new SequentialNeuralNetwork(layers, lossFunction, optimiser, weightInitialiser, neuronTemplate);
+        ISequentialNeuralNetwork neuralNetwork = new SequentialNeuralNetwork(layers, lossFunction, optimiser, weightInitialiser, neuronTemplate, biasInitialiser);
         GenericActions.WriteToConsoleNewLine("\tNeural network created!");
         return neuralNetwork;
     }

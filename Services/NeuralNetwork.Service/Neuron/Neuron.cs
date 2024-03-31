@@ -1,5 +1,7 @@
 ﻿using NeuralNetwork.Service.Activation_Functions;
+using NeuralNetwork.Service.Neurons.BiasInitialisation;
 using NeuralNetwork.Service.Optimisers;
+using NeuralNetwork.Service.Synapses.WeightInitialisation;
 
 namespace NeuralNetwork.Service.Neurons;
 
@@ -39,13 +41,27 @@ public class Neuron : INeuron
     /// A constructor method of a neuron.
     /// </summary>
     /// <param name="activationFunction">The activation function applied to signals (Z) running through the neuron during forward propagation.</param>
-    public Neuron(IActivationFunction activationFunction, IOptimiser optimiser)
+    public Neuron(IActivationFunction activationFunction, IOptimiser optimiser, IBiasInitialiser biasInitialiser)
     {
         this.ActivationFunction = activationFunction;
         this.Optimiser = optimiser;
-        this.Bias = 0;
+        this.Bias = biasInitialiser.Zero();
         this.Z = 0;
         this.h = 0;
+    }
+
+    /// <summary>
+    /// A constructor method of a neuron (creating a neuron by copying another neuron) but with a unique bias.
+    /// </summary>
+    /// <param name="neuronTemplate">The neuron from which the new neuron should be copied.</param>
+    /// /// <param name="biasInitialiser">The bias initialiser that is used to generate the unique bias.</param>
+    public Neuron(INeuron neuronTemplate, IBiasInitialiser biasInitialiser)
+    {
+        this.ActivationFunction = neuronTemplate.ActivationFunction;
+        this.Optimiser = neuronTemplate.Optimiser;
+        this.Bias = biasInitialiser.Zero();
+        this.Z = neuronTemplate.Z;
+        this.h = neuronTemplate.h;
     }
 
     /// <summary>
